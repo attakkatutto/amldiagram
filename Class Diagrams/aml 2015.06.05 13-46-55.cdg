@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="aml">
+  <ClassDiagramComponents>
+    <Class name="JadeListener" package="aml.agent" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields>
+        <Field name="manager" type="JadeManager" visibility="package"/>
+        <Field name="agents" type="List&lt;String&gt;" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="JadeManager" name="manager"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="deadAgent" returnType="void" visibility="public">
+          <Argument type="PlatformEvent" name="anEvent"/>
+        </Method>
+        <Method name="bornAgent" returnType="void" visibility="public">
+          <Argument type="PlatformEvent" name="anEvent"/>
+        </Method>
+        <Method name="startedPlatform" returnType="void" visibility="public">
+          <Argument type="PlatformEvent" name="pe"/>
+        </Method>
+        <Method name="suspendedPlatform" returnType="void" visibility="public">
+          <Argument type="PlatformEvent" name="pe"/>
+        </Method>
+        <Method name="resumedPlatform" returnType="void" visibility="public">
+          <Argument type="PlatformEvent" name="pe"/>
+        </Method>
+        <Method name="killedPlatform" returnType="void" visibility="public">
+          <Argument type="PlatformEvent" name="pe"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="JadeManager" package="aml.agent" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="mainContainer" type="AgentContainer" visibility="private" isFinal="true"/>
+        <Field name="graph" type="Graph" visibility="private" isFinal="true"/>
+        <Field name="start" type="Instant" visibility="private"/>
+        <Field name="end" type="Instant" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Graph" name="graph"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="exec" returnType="void" visibility="public"/>
+        <Method name="stop" returnType="void" visibility="public"/>
+        <Method name="agentsHandler" returnType="void" visibility="private"/>
+        <Method name="exit" returnType="void" visibility="private"/>
+        <Method name="writeData" returnType="void" visibility="public"/>
+        <Method name="generateBarabasiGraph" returnType="void" visibility="private"/>
+        <Method name="setLaunderersAndHonests" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="MyAgent" package="aml.agent" visibility="public" isFinal="true" xPosition="620.0" yPosition="20.0">
+      <Fields>
+        <Field name="type" type="NodeType" visibility="protected"/>
+        <Field name="id" type="String" visibility="protected"/>
+        <Field name="END" type="int" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MyNode" name="node"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getType" returnType="NodeType" visibility="public"/>
+        <Method name="getId" returnType="String" visibility="public"/>
+        <Method name="getEND" returnType="int" visibility="public"/>
+        <Method name="addEND" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Receiver" package="aml.agent" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields>
+        <Field name="n" type="MyNode" visibility="package"/>
+        <Field name="random" type="Random" visibility="package"/>
+        <Field name="finished" type="boolean" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="AgentBase" name="agent"/>
+          <Argument type="MyNode" name="n"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="action" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="HandleTransactionReceived" package="aml.agent" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="msg" type="ACLMessage" visibility="private" isFinal="true"/>
+        <Field name="n" type="MyNode" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="package">
+          <Argument type="MyAgent" name="a"/>
+          <Argument type="MyNode" name="n"/>
+          <Argument type="ACLMessage" name="msg"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="action" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="HandleFinished" package="aml.agent" visibility="public" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="msg" type="ACLMessage" visibility="private" isFinal="true"/>
+        <Field name="n" type="MyNode" visibility="private" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="package">
+          <Argument type="MyAgent" name="a"/>
+          <Argument type="MyNode" name="n"/>
+          <Argument type="ACLMessage" name="msg"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="action" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Sender" package="aml.agent" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="n" type="MyNode" visibility="package"/>
+        <Field name="random" type="Random" visibility="package"/>
+        <Field name="count" type="int" visibility="package"/>
+        <Field name="finished" type="boolean" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="AgentBase" name="agent"/>
+          <Argument type="MyNode" name="n"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getRandomAmount" returnType="double" visibility="private">
+          <Argument type="NodeType" name="type"/>
+        </Method>
+        <Method name="action" returnType="void" visibility="public"/>
+        <Method name="done" returnType="boolean" visibility="public"/>
+        <Method name="createFinishMessage" returnType="ACLMessage" visibility="private"/>
+        <Method name="createSendMessage" returnType="ACLMessage" visibility="private">
+          <Argument type="MyNode" name="n"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="AgentBase" package="aml.base" visibility="public" isAbstract="true" xPosition="2120.0" yPosition="20.0">
+      <Fields>
+        <Field name="n" type="MyNode" visibility="protected"/>
+        <Field name="random" type="Random" visibility="protected" isFinal="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="MyNode" name="n"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setup" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Interface name="INode" package="aml.base" visibility="public" xPosition="20.0" yPosition="420.0">
+      <Methods>
+        <Method name="setColor" returnType="void" visibility="package"/>
+        <Method name="getAgent" returnType="AgentBase" visibility="package"/>
+        <Method name="setAgent" returnType="void" visibility="package">
+          <Argument type="AgentBase" name="a"/>
+        </Method>
+        <Method name="initPartners" returnType="void" visibility="package"/>
+        <Method name="initParents" returnType="void" visibility="package"/>
+        <Method name="initDummies" returnType="void" visibility="package"/>
+        <Method name="getRevenues" returnType="double" visibility="package">
+          <Argument type="int" name="month"/>
+        </Method>
+        <Method name="setRevenues" returnType="void" visibility="package">
+          <Argument type="double" name="revenue"/>
+          <Argument type="int" name="month"/>
+        </Method>
+        <Method name="setCosts" returnType="void" visibility="package">
+          <Argument type="double" name="cost"/>
+          <Argument type="int" name="month"/>
+        </Method>
+        <Method name="getCosts" returnType="double" visibility="package">
+          <Argument type="int" name="month"/>
+        </Method>
+        <Method name="getBudget" returnType="double" visibility="package">
+          <Argument type="int" name="month"/>
+        </Method>
+      </Methods>
+    </Interface>
+    <Interface name="ITransaction" package="aml.base" visibility="public" xPosition="320.0" yPosition="420.0">
+      <Methods>
+        <Method name="getAmount" returnType="double" visibility="public"/>
+        <Method name="setAmount" returnType="void" visibility="public">
+          <Argument type="double" name="amount"/>
+        </Method>
+        <Method name="getId" returnType="String" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getIdSourceAgent" returnType="String" visibility="public"/>
+        <Method name="setIdSourceAgent" returnType="void" visibility="public">
+          <Argument type="String" name="idSourceAgent"/>
+        </Method>
+        <Method name="getIdTargetAgent" returnType="String" visibility="public"/>
+        <Method name="setIdTargetAgent" returnType="void" visibility="public">
+          <Argument type="String" name="idTargetAgent"/>
+        </Method>
+        <Method name="getMonth" returnType="int" visibility="public"/>
+      </Methods>
+    </Interface>
+    <Class name="NodeBase" package="aml.base" visibility="public" isAbstract="true" xPosition="620.0" yPosition="420.0">
+      <Fields>
+        <Field name="agent" type="AgentBase" visibility="protected"/>
+        <Field name="type" type="NodeType" visibility="protected"/>
+        <Field name="honest" type="boolean" visibility="protected"/>
+        <Field name="partners" type="ArrayList&lt;String&gt;" visibility="protected"/>
+        <Field name="parents" type="ArrayList&lt;String&gt;" visibility="protected"/>
+        <Field name="dummies" type="ArrayList&lt;String&gt;" visibility="protected"/>
+        <Field name="random" type="Random" visibility="protected"/>
+        <Field name="revenues" type="double[]" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="AbstractGraph" name="graph"/>
+          <Argument type="String" name="id"/>
+          <Argument type="NodeType" name="type"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getPartners" returnType="ArrayList&lt;String&gt;" visibility="public"/>
+        <Method name="setPartners" returnType="void" visibility="public">
+          <Argument type="ArrayList&lt;String&gt;" name="partners"/>
+        </Method>
+        <Method name="getParents" returnType="ArrayList&lt;String&gt;" visibility="public"/>
+        <Method name="setParents" returnType="void" visibility="public">
+          <Argument type="ArrayList&lt;String&gt;" name="parents"/>
+        </Method>
+        <Method name="setIndex" returnType="void" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+        <Method name="getType" returnType="NodeType" visibility="public"/>
+        <Method name="setType" returnType="void" visibility="public">
+          <Argument type="NodeType" name="type"/>
+        </Method>
+        <Method name="getRevenues" returnType="double" visibility="public">
+          <Argument type="int" name="month"/>
+        </Method>
+        <Method name="setRevenues" returnType="void" visibility="public">
+          <Argument type="double" name="revenue"/>
+          <Argument type="int" name="month"/>
+        </Method>
+        <Method name="setCosts" returnType="void" visibility="public">
+          <Argument type="double" name="cost"/>
+          <Argument type="int" name="month"/>
+        </Method>
+        <Method name="getCosts" returnType="double" visibility="public">
+          <Argument type="int" name="month"/>
+        </Method>
+        <Method name="getBudget" returnType="double" visibility="public">
+          <Argument type="int" name="month"/>
+        </Method>
+        <Method name="isHonest" returnType="boolean" visibility="public"/>
+        <Method name="setHonest" returnType="void" visibility="public">
+          <Argument type="boolean" name="honest"/>
+        </Method>
+        <Method name="isDummy" returnType="boolean" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="setColor" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="initParents" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="initPartners" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="initDummies" returnType="void" visibility="public" isAbstract="true"/>
+        <Method name="compareTo" returnType="int" visibility="public">
+          <Argument type="Object" name="o"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="SynthDB" package="aml.entity" visibility="public" xPosition="920.0" yPosition="420.0">
+      <Fields>
+        <Field name="DB_DRIVER" type="String" visibility="private" isFinal="true"/>
+        <Field name="DB_CONNECTION" type="String" visibility="private" isFinal="true"/>
+        <Field name="DB_USER" type="String" visibility="private" isFinal="true"/>
+        <Field name="DB_PASSWORD" type="String" visibility="private" isFinal="true"/>
+        <Field name="FILE_NAME" type="String" visibility="private" isFinal="true"/>
+        <Field name="HEADER_FILE" type="String" visibility="private" isFinal="true"/>
+        <Field name="ROW_FILE" type="String" visibility="private" isFinal="true"/>
+        <Field name="bw" type="BufferedWriter" visibility="package"/>
+        <Field name="mode" type="PersistenceMode" visibility="package"/>
+        <Field name="dbConnection" type="Connection" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="write" returnType="void" visibility="public">
+          <Argument type="Transaction" name="t"/>
+        </Method>
+        <Method name="insertRecordIntoTable" returnType="void" visibility="public">
+          <Argument type="Transaction" name="t"/>
+        </Method>
+        <Method name="cleanTable" returnType="void" visibility="private"/>
+        <Method name="createFile" returnType="void" visibility="private"/>
+        <Method name="writeFile" returnType="void" visibility="private">
+          <Argument type="Transaction" name="t"/>
+        </Method>
+        <Method name="closeFile" returnType="void" visibility="private"/>
+        <Method name="closeDB" returnType="void" visibility="private"/>
+        <Method name="close" returnType="void" visibility="public"/>
+        <Method name="initDBConnection" returnType="Connection" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Transaction" package="aml.entity" visibility="public" xPosition="1220.0" yPosition="420.0">
+      <Fields>
+        <Field name="serialVersionUID" type="long" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="id" type="String" visibility="private"/>
+        <Field name="idSource" type="String" visibility="private"/>
+        <Field name="idTarget" type="String" visibility="private"/>
+        <Field name="amount" type="double" visibility="private"/>
+        <Field name="month" type="short" visibility="private"/>
+        <Field name="sourceType" type="String" visibility="private"/>
+        <Field name="targetType" type="String" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="String" name="id"/>
+        </Constructor>
+        <Constructor visibility="public">
+          <Argument type="String" name="id"/>
+          <Argument type="String" name="idSource"/>
+          <Argument type="String" name="idTarget"/>
+          <Argument type="double" name="amount"/>
+          <Argument type="short" name="month"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getId" returnType="String" visibility="public"/>
+        <Method name="setId" returnType="void" visibility="public">
+          <Argument type="String" name="id"/>
+        </Method>
+        <Method name="getIdSource" returnType="String" visibility="public"/>
+        <Method name="setIdSource" returnType="void" visibility="public">
+          <Argument type="String" name="idSource"/>
+        </Method>
+        <Method name="getIdTarget" returnType="String" visibility="public"/>
+        <Method name="setIdTarget" returnType="void" visibility="public">
+          <Argument type="String" name="idTarget"/>
+        </Method>
+        <Method name="getAmount" returnType="double" visibility="public"/>
+        <Method name="setAmount" returnType="void" visibility="public">
+          <Argument type="double" name="amount"/>
+        </Method>
+        <Method name="getMonth" returnType="short" visibility="public"/>
+        <Method name="setMonth" returnType="void" visibility="public">
+          <Argument type="short" name="month"/>
+        </Method>
+        <Method name="getSourceType" returnType="String" visibility="public"/>
+        <Method name="setSourceType" returnType="void" visibility="public">
+          <Argument type="String" name="sourceType"/>
+        </Method>
+        <Method name="getTargetType" returnType="String" visibility="public"/>
+        <Method name="setTargetType" returnType="void" visibility="public">
+          <Argument type="String" name="targetType"/>
+        </Method>
+        <Method name="hashCode" returnType="int" visibility="public"/>
+        <Method name="equals" returnType="boolean" visibility="public">
+          <Argument type="Object" name="object"/>
+        </Method>
+        <Method name="toString" returnType="String" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Config" package="aml.global" visibility="public" xPosition="1520.0" yPosition="420.0">
+      <Fields>
+        <Field name="_instance" type="Config" visibility="private" isStatic="true"/>
+        <Field name="numberAgentMessage" type="int" visibility="private"/>
+        <Field name="numberParents" type="int" visibility="private"/>
+        <Field name="employeeMean" type="double" visibility="private"/>
+        <Field name="laundererPercentage" type="int" visibility="private"/>
+        <Field name="guiEnabled" type="boolean" visibility="private"/>
+        <Field name="persistenceMode" type="PersistenceMode" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="private"/>
+      </Constructors>
+      <Methods>
+        <Method name="instance" returnType="Config" visibility="public" isStatic="true"/>
+        <Method name="unmashall" returnType="Config" visibility="private" isStatic="true"/>
+        <Method name="getNumberAgentMessage" returnType="int" visibility="public"/>
+        <Method name="setNumberAgentMessage" returnType="void" visibility="public">
+          <Argument type="int" name="num"/>
+        </Method>
+        <Method name="getMaxNumberDummies" returnType="int" visibility="public"/>
+        <Method name="setMaxNumberDummies" returnType="void" visibility="public">
+          <Argument type="int" name="num"/>
+        </Method>
+        <Method name="getNumberOfEntity" returnType="int" visibility="public"/>
+        <Method name="setNumberOfEntity" returnType="void" visibility="public">
+          <Argument type="int" name="num"/>
+        </Method>
+        <Method name="getMaxEdgesPerEntity" returnType="int" visibility="public"/>
+        <Method name="setMaxEdgesPerEntity" returnType="void" visibility="public">
+          <Argument type="int" name="num"/>
+        </Method>
+        <Method name="getNumberPartners" returnType="int" visibility="public"/>
+        <Method name="setNumberPartners" returnType="void" visibility="public">
+          <Argument type="int" name="num"/>
+        </Method>
+        <Method name="getNumberParents" returnType="int" visibility="public"/>
+        <Method name="setNumberParents" returnType="void" visibility="public">
+          <Argument type="int" name="num"/>
+        </Method>
+        <Method name="getEmployeeMeanHonest" returnType="double" visibility="public"/>
+        <Method name="setEmployeeMeanHonest" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getEmployeeStdDevHonest" returnType="double" visibility="public"/>
+        <Method name="setEmployeeStdDevHonest" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getFreelanceMeanHonest" returnType="double" visibility="public"/>
+        <Method name="setFreelanceMeanHonest" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getFreelanceStdDevHonest" returnType="double" visibility="public"/>
+        <Method name="setFreelanceStdDevHonest" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getSmallCompanyMeanHonest" returnType="double" visibility="public"/>
+        <Method name="setSmallCompanyMeanHonest" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getSmallCompanyStdDevHonest" returnType="double" visibility="public"/>
+        <Method name="setSmallCompanyStdDevHonest" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getBigCompanyMeanHonest" returnType="double" visibility="public"/>
+        <Method name="setBigCompanyMeanHonest" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getBigCompanyStdDevHonest" returnType="double" visibility="public"/>
+        <Method name="setBigCompanyStdDevHonest" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getEmployeeMeanLaunderer" returnType="double" visibility="public"/>
+        <Method name="setEmployeeMeanLaunderer" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getEmployeeStdDevLaunderer" returnType="double" visibility="public"/>
+        <Method name="setEmployeeStdDevLaunderer" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getFreelanceMeanLaunderer" returnType="double" visibility="public"/>
+        <Method name="setFreelanceMeanLaunderer" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getFreelanceStdDevLaunderer" returnType="double" visibility="public"/>
+        <Method name="setFreelanceStdDevLaunderer" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getSmallCompanyMeanLaunderer" returnType="double" visibility="public"/>
+        <Method name="setSmallCompanyMeanLaunderer" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getSmallCompanyStdDevLaunderer" returnType="double" visibility="public"/>
+        <Method name="setSmallCompanyStdDevLaunderer" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getBigCompanyMeanLaunderer" returnType="double" visibility="public"/>
+        <Method name="setBigCompanyMeanLaunderer" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getBigCompanyStdDevLaunderer" returnType="double" visibility="public"/>
+        <Method name="setBigCompanyStdDevLaunderer" returnType="void" visibility="public">
+          <Argument type="double" name="num"/>
+        </Method>
+        <Method name="getLaundererPercentage" returnType="int" visibility="public"/>
+        <Method name="setLaundererPercentage" returnType="void" visibility="public">
+          <Argument type="int" name="laundererPercentage"/>
+        </Method>
+        <Method name="getPersistenceMode" returnType="PersistenceMode" visibility="public"/>
+        <Method name="setPersistenceMode" returnType="void" visibility="public">
+          <Argument type="PersistenceMode" name="mode"/>
+        </Method>
+        <Method name="isGuiEnabled" returnType="boolean" visibility="public"/>
+        <Method name="setGuiEnabled" returnType="void" visibility="public">
+          <Argument type="boolean" name="guiEnabled"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Constant" package="aml.global" visibility="public" isFinal="true" xPosition="1820.0" yPosition="420.0">
+      <Fields>
+        <Field name="MONTHS" type="int" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="WRITER_FILENAME" type="String" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="DEFAULT_DAMPING_FACTOR" type="double" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="DEFAULT_PRECISION" type="double" visibility="public" isStatic="true" isFinal="true"/>
+        <Field name="DEFAULT_RANK_ATTRIBUTE" type="String" visibility="public" isStatic="true" isFinal="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Enums" package="aml.global" visibility="public" xPosition="2120.0" yPosition="420.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Connection" package="aml.graph" visibility="public" isFinal="true" xPosition="20.0" yPosition="820.0">
+      <Fields/>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="id"/>
+          <Argument type="NodeBase" name="sourceAgent"/>
+          <Argument type="NodeBase" name="targetAgent"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setIndex" returnType="void" visibility="public">
+          <Argument type="int" name="index"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MyNode" package="aml.graph" visibility="public" isFinal="true" xPosition="320.0" yPosition="820.0">
+      <Fields>
+        <Field name="received" type="ArrayList&lt;Transaction&gt;" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="AbstractGraph" name="graph"/>
+          <Argument type="String" name="id"/>
+          <Argument type="NodeType" name="type"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="setColor" returnType="void" visibility="public"/>
+        <Method name="getAgent" returnType="AgentBase" visibility="public"/>
+        <Method name="setAgent" returnType="void" visibility="public">
+          <Argument type="AgentBase" name="a"/>
+        </Method>
+        <Method name="initPartners" returnType="void" visibility="public"/>
+        <Method name="initParents" returnType="void" visibility="public"/>
+        <Method name="addReceived" returnType="void" visibility="public">
+          <Argument type="Transaction" name="received"/>
+        </Method>
+        <Method name="getReceived" returnType="ArrayList&lt;Transaction&gt;" visibility="public"/>
+        <Method name="initDummies" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="PageRank" package="aml.graph" visibility="public" isFinal="true" xPosition="620.0" yPosition="820.0">
+      <Fields>
+        <Field name="dampingFactor" type="double" visibility="protected"/>
+        <Field name="precision" type="double" visibility="protected"/>
+        <Field name="rankAttribute" type="String" visibility="protected"/>
+        <Field name="graph" type="Graph" visibility="protected"/>
+        <Field name="upToDate" type="boolean" visibility="protected"/>
+        <Field name="normDiff" type="double" visibility="protected"/>
+        <Field name="newRanks" type="List&lt;Double&gt;" visibility="protected"/>
+        <Field name="iterationCount" type="int" visibility="protected"/>
+        <Field name="verbose" type="boolean" visibility="protected"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+        <Constructor visibility="public">
+          <Argument type="double" name="dampingFactor"/>
+          <Argument type="double" name="precision"/>
+          <Argument type="String" name="rankAttribute"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="getDampingFactor" returnType="double" visibility="public"/>
+        <Method name="setDampingFactor" returnType="void" visibility="public">
+          <Argument type="double" name="dampingFactor"/>
+        </Method>
+        <Method name="getPrecision" returnType="double" visibility="public"/>
+        <Method name="setPrecision" returnType="void" visibility="public">
+          <Argument type="double" name="precision"/>
+        </Method>
+        <Method name="getRankAttribute" returnType="String" visibility="public"/>
+        <Method name="setRankAttribute" returnType="void" visibility="public">
+          <Argument type="String" name="rankAttribute"/>
+        </Method>
+        <Method name="setVerbose" returnType="void" visibility="public">
+          <Argument type="boolean" name="verbose"/>
+        </Method>
+        <Method name="init" returnType="void" visibility="public">
+          <Argument type="Graph" name="graph"/>
+        </Method>
+        <Method name="compute" returnType="void" visibility="public"/>
+        <Method name="terminate" returnType="void" visibility="public"/>
+        <Method name="nodeAdded" returnType="void" visibility="public">
+          <Argument type="String" name="sourceId"/>
+          <Argument type="long" name="timeId"/>
+          <Argument type="String" name="nodeId"/>
+        </Method>
+        <Method name="nodeRemoved" returnType="void" visibility="public">
+          <Argument type="String" name="sourceId"/>
+          <Argument type="long" name="timeId"/>
+          <Argument type="String" name="nodeId"/>
+        </Method>
+        <Method name="edgeAdded" returnType="void" visibility="public">
+          <Argument type="String" name="sourceId"/>
+          <Argument type="long" name="timeId"/>
+          <Argument type="String" name="edgeId"/>
+          <Argument type="String" name="fromNodeId"/>
+          <Argument type="String" name="toNodeId"/>
+          <Argument type="boolean" name="directed"/>
+        </Method>
+        <Method name="edgeRemoved" returnType="void" visibility="public">
+          <Argument type="String" name="sourceId"/>
+          <Argument type="long" name="timeId"/>
+          <Argument type="String" name="edgeId"/>
+        </Method>
+        <Method name="graphCleared" returnType="void" visibility="public">
+          <Argument type="String" name="sourceId"/>
+          <Argument type="long" name="timeId"/>
+        </Method>
+        <Method name="stepBegins" returnType="void" visibility="public">
+          <Argument type="String" name="sourceId"/>
+          <Argument type="long" name="timeId"/>
+          <Argument type="double" name="step"/>
+        </Method>
+        <Method name="iteration" returnType="void" visibility="protected"/>
+        <Method name="getRank" returnType="double" visibility="public">
+          <Argument type="Node" name="node"/>
+        </Method>
+        <Method name="getIterationCount" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Main" package="aml.main" visibility="public" xPosition="920.0" yPosition="820.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+        <Method name="guiInit" returnType="void" visibility="private" isStatic="true">
+          <Argument type="Graph" name="graph"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="n" source="aml.base.AgentBase" target="aml.graph.MyNode" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="dbConnection" source="aml.entity.SynthDB" target="aml.graph.Connection" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="aml.graph.MyNode" target="aml.base.NodeBase"/>
+    <UseRelation source="aml.graph.MyNode" target="aml.base.AgentBase" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="n" source="aml.agent.HandleTransactionReceived" target="aml.graph.MyNode" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="aml.base.INode" target="aml.base.AgentBase" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="aml.graph.MyNode" target="aml.entity.Transaction" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="aml.global.Config" target="aml.global.Config" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <IsRelation name="is" source="aml.agent.MyAgent" target="aml.base.AgentBase"/>
+    <HasRelation name="_instance" source="aml.global.Config" target="aml.global.Config" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="manager" source="aml.agent.JadeListener" target="aml.agent.JadeManager" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <ImplementsRelation name="&lt;&lt;implements&gt;&gt;" source="aml.base.NodeBase" target="aml.base.INode"/>
+    <UseRelation source="aml.entity.SynthDB" target="aml.graph.Connection" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="aml.agent.Sender" target="aml.graph.MyNode" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="n" source="aml.agent.Receiver" target="aml.graph.MyNode" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="n" source="aml.agent.HandleFinished" target="aml.graph.MyNode" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="agent" source="aml.base.NodeBase" target="aml.base.AgentBase" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="n" source="aml.agent.Sender" target="aml.graph.MyNode" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <UseRelation source="aml.entity.SynthDB" target="aml.entity.Transaction" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="received" source="aml.graph.MyNode" target="aml.entity.Transaction" type="Aggregation" sourceCardinality="1..1" targetCardinality="0..*" collectionType="ArrayList&lt;Transaction&gt;"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
